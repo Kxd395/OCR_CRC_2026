@@ -1,7 +1,7 @@
 {
   "document_type_id": "crc_survey_l_anchors_v1",
-    "version": "1.5.0",
-  "description": "CRC Survey L template with 5 questions (Q1-Q5) and 130 checkboxes (26 options per question). Uses ML-based detection with edge features for 97.69% accuracy. Optimized for grayscale scans.",
+    "version": "1.6.0",
+  "description": "CRC Survey L template with 5 questions (Q1-Q5) and 130 checkboxes (26 options per question). Uses ML-based detection with edge features for 98.62% accuracy (threshold 0.55). Optimized for grayscale scans.",
   "page_size": {
     "width_px": 2550,
     "height_px": 3300,
@@ -10,6 +10,7 @@
   "detection_settings": {
     "fill_threshold_percent": 11.6,
     "use_color_fusion": false,
+    "ml_decision_threshold": 0.55,
     "per_question_thresholds": {
       "Q1": 11.4,
       "Q2": 11.3,

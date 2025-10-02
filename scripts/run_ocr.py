@@ -165,17 +165,22 @@ def main():
     model = None
     scaler = None
     use_ml = False
+    ml_threshold = 0.5  # Default decision threshold
     
     template_dir = pathlib.Path(args.template).parent
     model_file = template_dir / "ml_model.pkl"
     scaler_file = template_dir / "ml_scaler.pkl"
+    
+    # Load ML decision threshold from template
+    if "detection_settings" in tpl and "ml_decision_threshold" in tpl["detection_settings"]:
+        ml_threshold = tpl["detection_settings"]["ml_decision_threshold"]
     
     if model_file.exists() and scaler_file.exists():
         try:
             model = joblib.load(model_file)
             scaler = joblib.load(scaler_file)
             use_ml = True
-            print("✅ ML model loaded - using edge detection + 7 features")
+            print(f"✅ ML model loaded - using edge detection + 7 features (threshold: {ml_threshold})")
         except Exception as e:
             print(f"⚠️  Could not load ML model: {e}")
             print("   Falling back to threshold-only detection")
@@ -219,10 +224,10 @@ def main():
                 features = extract_checkbox_features(crop)
                 feature_vector = np.array([[features[name] for name in feature_names]])
                 feature_scaled = scaler.transform(feature_vector)
-                prediction = model.predict(feature_scaled)[0]
                 probability = model.predict_proba(feature_scaled)[0, 1]
                 
-                checked = bool(prediction == 1)
+                # Use configurable ML decision threshold
+                checked = bool(probability >= ml_threshold)
                 score = float(probability)  # Use probability as score
             else:
                 # Fallback to threshold-only detection
