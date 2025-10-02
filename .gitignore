@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+artifacts/
+data/
+gold/
+.DS_Store
+*.pyc

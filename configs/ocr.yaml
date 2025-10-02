@@ -1,0 +1,17 @@
+# configs/ocr.yaml
+dpi: 300
+tesseract_langs: ["eng"]
+batch_size: 4
+alignment:
+  method: "homography"
+  ransacth: 3.0
+  warn_residual_px: 4.5
+  max_residual_px: 6.0
+checkbox:
+  fill_threshold: 0.1165  # 11.65% - calibrated threshold for light checkbox marks
+  min_margin: 2
+overlays:
+  stroke_px: 2
+routing:
+  gemma_default: "12B"
+  escalate: ["low_confidence", "layout_anomaly", "table_heavy"]

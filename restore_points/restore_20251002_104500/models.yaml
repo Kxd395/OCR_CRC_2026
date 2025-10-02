@@ -1,0 +1,6 @@
+# configs/models.yaml
+provider: "openai_compatible"   # or "google_genai"
+model_id: "${GEMMA_MODEL_ID:-gemma-3-12b-it}"
+endpoint: "${GEMMA_ENDPOINT:-http://localhost:8000/v1}"
+api_key_env: "GEMMA_API_KEY"
+timeout_s: 60

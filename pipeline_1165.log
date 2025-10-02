@@ -1,0 +1,816 @@
+Ingested 26 pages -> artifacts/run_20251002_143459_11.65
+================================================================================
+STEP 1: ANCHOR DETECTION
+================================================================================
+Run directory: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65
+Template: templates/crc_survey_l_anchors_v1/template.json
+Expected anchors: 4
+Search window: ±80px
+
+Processing 26 pages...
+
+📄 page_0001.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (99.8, 166.1)
+      Confidence: 23.39%
+      Area: 143 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1520.6, 166.4)
+      Confidence: 24.86%
+      Area: 154 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1534.1, 2377.6)
+      Confidence: 20.88%
+      Area: 124 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (97.5, 2376.1)
+      Confidence: 24.73%
+      Area: 154 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0002.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (48.5, 161.3)
+      Confidence: 24.95%
+      Area: 154 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1471.3, 141.5)
+      Confidence: 20.53%
+      Area: 124 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1514.7, 2349.5)
+      Confidence: 25.96%
+      Area: 162 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (78.4, 2368.9)
+      Confidence: 23.61%
+      Area: 144 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0003.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (59.0, 157.2)
+      Confidence: 25.58%
+      Area: 160 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1479.8, 129.6)
+      Confidence: 26.46%
+      Area: 164 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1536.0, 2340.8)
+      Confidence: 16.16%
+      Area: 94 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (98.9, 2366.0)
+      Confidence: 25.94%
+      Area: 163 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0004.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (74.4, 161.5)
+      Confidence: 25.70%
+      Area: 160 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1495.9, 140.0)
+      Confidence: 23.81%
+      Area: 144 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1541.9, 2349.6)
+      Confidence: 25.85%
+      Area: 161 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (106.0, 2371.3)
+      Confidence: 25.14%
+      Area: 154 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0005.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (61.1, 160.6)
+      Confidence: 25.29%
+      Area: 156 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1482.3, 128.5)
+      Confidence: 23.56%
+      Area: 144 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1543.6, 2339.5)
+      Confidence: 20.10%
+      Area: 120 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (107.4, 2369.6)
+      Confidence: 24.36%
+      Area: 150 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0006.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (57.2, 160.7)
+      Confidence: 23.80%
+      Area: 144 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1478.5, 130.1)
+      Confidence: 26.27%
+      Area: 162 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1537.3, 2340.2)
+      Confidence: 21.25%
+      Area: 130 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (101.4, 2369.0)
+      Confidence: 24.71%
+      Area: 152 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0007.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (102.0, 162.3)
+      Confidence: 25.13%
+      Area: 158 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1521.9, 152.3)
+      Confidence: 19.77%
+      Area: 116 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1549.8, 2362.9)
+      Confidence: 25.94%
+      Area: 163 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (114.2, 2371.9)
+      Confidence: 24.03%
+      Area: 146 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0008.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (97.3, 164.3)
+      Confidence: 23.05%
+      Area: 140 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1518.9, 153.5)
+      Confidence: 23.17%
+      Area: 141 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1548.1, 2363.0)
+      Confidence: 23.14%
+      Area: 142 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (111.7, 2373.6)
+      Confidence: 24.58%
+      Area: 150 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0009.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (104.5, 158.5)
+      Confidence: 18.12%
+      Area: 105 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1525.3, 151.1)
+      Confidence: 23.26%
+      Area: 142 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1550.9, 2363.7)
+      Confidence: 25.18%
+      Area: 154 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (115.0, 2372.4)
+      Confidence: 24.10%
+      Area: 149 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0010.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (78.8, 160.7)
+      Confidence: 24.13%
+      Area: 150 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1500.0, 143.1)
+      Confidence: 23.48%
+      Area: 144 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1539.8, 2352.3)
+      Confidence: 19.70%
+      Area: 117 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (102.4, 2370.7)
+      Confidence: 24.95%
+      Area: 154 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0011.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (132.7, 169.0)
+      Confidence: 23.69%
+      Area: 144 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1545.6, 168.9)
+      Confidence: 22.24%
+      Area: 137 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1556.9, 2379.3)
+      Confidence: 17.56%
+      Area: 101 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (127.3, 2378.4)
+      Confidence: 19.40%
+      Area: 114 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0012.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (130.3, 167.3)
+      Confidence: 22.83%
+      Area: 140 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1543.7, 166.5)
+      Confidence: 25.33%
+      Area: 156 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1555.0, 2375.1)
+      Confidence: 23.86%
+      Area: 146 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (127.4, 2375.8)
+      Confidence: 25.99%
+      Area: 163 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0013.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (131.2, 166.0)
+      Confidence: 19.95%
+      Area: 118 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1544.1, 165.8)
+      Confidence: 17.17%
+      Area: 98 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1556.9, 2377.7)
+      Confidence: 23.86%
+      Area: 146 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (129.4, 2378.7)
+      Confidence: 24.92%
+      Area: 152 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0014.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (129.6, 163.9)
+      Confidence: 26.32%
+      Area: 164 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1541.1, 159.1)
+      Confidence: 20.23%
+      Area: 120 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1560.1, 2370.2)
+      Confidence: 24.88%
+      Area: 151 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (131.3, 2373.6)
+      Confidence: 23.05%
+      Area: 141 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0015.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (128.6, 164.1)
+      Confidence: 18.33%
+      Area: 106 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1542.8, 157.4)
+      Confidence: 22.71%
+      Area: 139 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1562.6, 2367.7)
+      Confidence: 25.87%
+      Area: 158 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (133.3, 2371.4)
+      Confidence: 19.21%
+      Area: 113 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0016.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (143.2, 166.9)
+      Confidence: 25.09%
+      Area: 158 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1556.7, 167.2)
+      Confidence: 25.71%
+      Area: 162 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1571.3, 2372.5)
+      Confidence: 24.96%
+      Area: 153 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (141.2, 2374.1)
+      Confidence: 19.95%
+      Area: 118 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0017.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (126.1, 167.4)
+      Confidence: 25.65%
+      Area: 160 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1538.5, 152.3)
+      Confidence: 23.12%
+      Area: 138 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1572.6, 2361.7)
+      Confidence: 25.84%
+      Area: 162 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (145.2, 2376.5)
+      Confidence: 25.09%
+      Area: 154 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0018.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (133.1, 168.3)
+      Confidence: 24.20%
+      Area: 148 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1546.3, 161.1)
+      Confidence: 22.40%
+      Area: 136 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1568.6, 2372.6)
+      Confidence: 25.34%
+      Area: 158 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (140.8, 2378.5)
+      Confidence: 24.32%
+      Area: 148 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0019.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (143.7, 167.6)
+      Confidence: 18.45%
+      Area: 108 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1555.5, 165.8)
+      Confidence: 22.12%
+      Area: 136 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1572.6, 2373.7)
+      Confidence: 26.31%
+      Area: 164 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (142.7, 2376.9)
+      Confidence: 19.05%
+      Area: 110 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0020.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (151.5, 168.8)
+      Confidence: 25.70%
+      Area: 161 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1564.4, 172.7)
+      Confidence: 23.25%
+      Area: 141 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1568.0, 2379.6)
+      Confidence: 16.77%
+      Area: 96 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (138.7, 2374.3)
+      Confidence: 20.00%
+      Area: 118 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0021.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (142.5, 166.0)
+      Confidence: 27.49%
+      Area: 171 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1556.4, 159.9)
+      Confidence: 22.46%
+      Area: 134 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1574.2, 2369.5)
+      Confidence: 23.59%
+      Area: 143 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (145.9, 2374.2)
+      Confidence: 23.26%
+      Area: 142 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0022.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (138.2, 166.4)
+      Confidence: 26.29%
+      Area: 165 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1550.4, 162.2)
+      Confidence: 17.51%
+      Area: 101 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1570.4, 2369.3)
+      Confidence: 23.69%
+      Area: 144 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (141.3, 2374.7)
+      Confidence: 22.92%
+      Area: 140 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0023.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (84.9, 169.9)
+      Confidence: 25.10%
+      Area: 154 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1506.4, 168.5)
+      Confidence: 23.50%
+      Area: 142 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1521.3, 2376.5)
+      Confidence: 24.74%
+      Area: 152 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (84.0, 2376.9)
+      Confidence: 24.58%
+      Area: 150 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0024.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (145.0, 173.8)
+      Confidence: 24.36%
+      Area: 150 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1557.0, 168.9)
+      Confidence: 24.02%
+      Area: 146 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1568.5, 2381.9)
+      Confidence: 24.94%
+      Area: 155 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (141.0, 2383.7)
+      Confidence: 24.87%
+      Area: 150 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0025.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (77.9, 172.7)
+      Confidence: 24.03%
+      Area: 148 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1498.3, 176.0)
+      Confidence: 22.03%
+      Area: 132 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1504.1, 2388.6)
+      Confidence: 19.99%
+      Area: 118 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (68.2, 2384.3)
+      Confidence: 22.92%
+      Area: 140 px²
+   Detection: 4/4 anchors (100%)
+
+📄 page_0026.png
+   Image size: 1650×2550 pixels
+   Anchor 1 (Top-Left):
+      Expected: (115.5, 180.0)
+      ✓ Detected: (83.5, 170.2)
+      Confidence: 24.36%
+      Area: 150 px²
+   Anchor 2 (Top-Right):
+      Expected: (1534.5, 180.0)
+      ✓ Detected: (1505.6, 180.0)
+      Confidence: 22.49%
+      Area: 136 px²
+   Anchor 3 (Bottom-Right):
+      Expected: (1534.5, 2404.9)
+      ✓ Detected: (1500.6, 2392.2)
+      Confidence: 25.48%
+      Area: 160 px²
+   Anchor 4 (Bottom-Left):
+      Expected: (115.5, 2404.9)
+      ✓ Detected: (62.5, 2380.3)
+      Confidence: 24.36%
+      Area: 150 px²
+   Detection: 4/4 anchors (100%)
+
+================================================================================
+SUMMARY
+================================================================================
+Total pages: 26
+Total anchors expected: 104
+Total anchors detected: 104
+Overall detection rate: 100.0%
+
+✅ Logs saved to: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/step1_anchor_detection
+✅ Visualizations: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/step1_anchor_detection/visualizations
+✅ JSON log: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/step1_anchor_detection/anchor_detection_log.json
+================================================================================
+================================================================================
+STEP 2: ALIGNMENT AND CROPPING
+================================================================================
+
+Template size: 2550×3300px
+Template anchors (pixels):
+  BL: ( 178, 3112)
+  BR: (2371, 3112)
+  TL: ( 178,  232)
+  TR: (2371,  232)
+
+Crop region (margin: 0.125 inch = 37px outward):
+  X: 141 → 2408 (width: 2267px)
+  Y: 195 → 3149 (height: 2954px)
+  Cropped size: 2267×2954px
+
+Processing 26 pages...
+
+✅ Page  1: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  2: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  3: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  4: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  5: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  6: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  7: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  8: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page  9: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 10: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 11: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 12: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 13: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 14: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 15: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 16: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 17: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 18: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 19: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 20: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 21: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 22: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 23: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 24: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 25: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+✅ Page 26: OK   | homography | 4/4 anchors | Mean: 0.00px | Max: 0.00px
+
+================================================================================
+ALIGNMENT & CROPPING SUMMARY
+================================================================================
+✅ OK:   26 pages (error ≤ 4.5px)
+⚠️  WARN:  0 pages (error ≤ 6.0px)
+❌ FAIL:  0 pages (error > 6.0px or no alignment)
+
+Total aligned: 26/26 pages
+
+Output files:
+  - Full aligned: aligned_full/ (2550×3300px)
+  - Cropped: aligned_cropped/ (2267×2954px)
+  - Visualizations: visualizations/
+  - Details: alignment_results.json
+================================================================================
+✅ Created homography.json
+   Input:  /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/step2_alignment_and_crop/alignment_results.json
+   Output: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/logs/homography.json
+   Pages:  26
+Using fill threshold: 11.7%
+Alignment residuals (warn=6.0px 
+          fail=4.5px)           
+┏━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━┓
+┃ Page ┃ Residual px ┃ Quality ┃
+┡━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━┩
+│ 1    │ 0.00        │ ok      │
+│ 2    │ 0.00        │ ok      │
+│ 3    │ 0.00        │ ok      │
+│ 4    │ 0.00        │ ok      │
+│ 5    │ 0.00        │ ok      │
+│ 6    │ 0.00        │ ok      │
+│ 7    │ 0.00        │ ok      │
+│ 8    │ 0.00        │ ok      │
+│ 9    │ 0.00        │ ok      │
+│ 10   │ 0.00        │ ok      │
+│ 11   │ 0.00        │ ok      │
+│ 12   │ 0.00        │ ok      │
+│ 13   │ 0.00        │ ok      │
+│ 14   │ 0.00        │ ok      │
+│ 15   │ 0.00        │ ok      │
+│ 16   │ 0.00        │ ok      │
+│ 17   │ 0.00        │ ok      │
+│ 18   │ 0.00        │ ok      │
+│ 19   │ 0.00        │ ok      │
+│ 20   │ 0.00        │ ok      │
+│ 21   │ 0.00        │ ok      │
+│ 22   │ 0.00        │ ok      │
+│ 23   │ 0.00        │ ok      │
+│ 24   │ 0.00        │ ok      │
+│ 25   │ 0.00        │ ok      │
+│ 26   │ 0.00        │ ok      │
+└──────┴─────────────┴─────────┘
+======================================================================
+CRC SURVEY - EXCEL EXPORT
+======================================================================
+
+Loading template...
+Using threshold: 11.5%
+Found 26 pages to process
+Processing page 0001... ✓ (6 checked)
+Processing page 0002... ✓ (6 checked)
+Processing page 0003... ✓ (6 checked)
+Processing page 0004... ✓ (5 checked)
+Processing page 0005... ✓ (7 checked)
+Processing page 0006... ✓ (4 checked)
+Processing page 0007... ✓ (6 checked)
+Processing page 0008... ✓ (4 checked)
+Processing page 0009... ✓ (6 checked)
+Processing page 0010... ✓ (6 checked)
+Processing page 0011... ✓ (12 checked)
+Processing page 0012... ✓ (12 checked)
+Processing page 0013... ✓ (14 checked)
+Processing page 0014... ✓ (11 checked)
+Processing page 0015... ✓ (7 checked)
+Processing page 0016... ✓ (6 checked)
+Processing page 0017... ✓ (11 checked)
+Processing page 0018... ✓ (13 checked)
+Processing page 0019... ✓ (13 checked)
+Processing page 0020... ✓ (11 checked)
+Processing page 0021... ✓ (9 checked)
+Processing page 0022... ✓ (10 checked)
+Processing page 0023... ✓ (6 checked)
+Processing page 0024... ✓ (8 checked)
+Processing page 0025... ✓ (8 checked)
+Processing page 0026... ✓ (6 checked)
+
+Creating Excel workbook...
+
+✅ Excel report saved: /Users/VScode_Projects/projects/crc_ocr_dropin/exports/run_20251002_143459_11.65.xlsx
+
+======================================================================
+✅ SUCCESS - Excel report created
+   File: /Users/VScode_Projects/projects/crc_ocr_dropin/exports/run_20251002_143459_11.65.xlsx
+
+Sheets included:
+  1. Summary       - Overview statistics
+  2. Detailed      - All checkbox results
+  3. Response Tally - Answer distribution
+  4. Raw Data      - For pivot tables
+======================================================================
+/Users/VScode_Projects/projects/crc_ocr_dropin/run_pipeline.py:221: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat()+"Z",
+✅ Run documentation created in /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/
+   - INDEX.md
+   - notes/DATA_PROVENANCE.md
+   - notes/RETENTION.md
+   - notes/RUN_SUMMARY.md
+   - notes/CONFIGURATION.md
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/ingest_pdf.py --pdf "review/test_survey.pdf" --threshold 11.65
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/step1_find_anchors.py --run-dir "/Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65" --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/step2_align_and_crop.py --run-dir "/Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65" --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/convert_alignment_for_ocr.py --run-dir "/Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/make_overlays.py --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/run_ocr.py --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/qa_overlay_from_results.py --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/validate_run.py --template "templates/crc_survey_l_anchors_v1/template.json"
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/export_to_excel.py --run-dir "/Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65" --out "/Users/VScode_Projects/projects/crc_ocr_dropin/exports/run_20251002_143459_11.65.xlsx" --near 0.03
+✅ Excel file copied to run directory: artifacts/run_20251002_143459_11.65/export/run_20251002_143459_11.65.xlsx
+
+📝 Generating run documentation...
+[run] /Users/VScode_Projects/projects/crc_ocr_dropin/.venv/bin/python scripts/create_run_documentation.py --run-dir "/Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65" --pdf "review/test_survey.pdf" --template "templates/crc_survey_l_anchors_v1/template.json" --threshold 11.5 --near 0.03 --notes ""
+
+✅ Done. Excel: /Users/VScode_Projects/projects/crc_ocr_dropin/exports/run_20251002_143459_11.65.xlsx
+📄 Run documentation: /Users/VScode_Projects/projects/crc_ocr_dropin/artifacts/run_20251002_143459_11.65/INDEX.md

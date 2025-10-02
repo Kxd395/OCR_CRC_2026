@@ -1,0 +1,8 @@
+opencv-python
+numpy
+Pillow
+pytesseract
+pdf2image
+PyYAML
+rich
+requests

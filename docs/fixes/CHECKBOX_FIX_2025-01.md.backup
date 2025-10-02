@@ -1,0 +1,94 @@
+# Checkbox Overlay Fix - October 2025 (COMPLETE)
+
+## Problem
+The OCR checkbox overlays were positioned incorrectly - off by approximately 600 pixels vertically. Checkboxes were not being detected at all, and visual overlays did not align with actual checkbox positions.
+
+## Root Cause Analysis
+
+### Primary Issue: Homography Transformation
+The critical problem was that **three key scripts were applying homography transformation inconsistently**:
+
+1. **make_overlays.py** (Step 3) - Was warping template-space coordinates back to image space using `Hinv` matrix
+2. **run_ocr.py** (Step 4) - Was warping cropped images BACK to template space using `M` matrix, then extracting checkboxes
+3. **qa_overlay_from_results.py** (Step 5) - Was warping template-space coordinates back to image space using `Minv` matrix
+
+This caused:
+- **~90px X-axis offset**
+- **~130px Y-axis offset**
+- Checkbox extraction from wrong image regions
+- No detections or false detections
+
+### Secondary Issue: Coordinate Space Confusion
+Coordinates in `template.json` were normalized to **template dimensions** (2550×3300) but needed to be normalized to **cropped dimensions** (2267×2954).
+
+## Solution
+Updated the `grid.json` with correct normalized coordinates based on the documented measurements from `run_20251001_185300_good`, adjusted for the current crop dimensions.
+
+**AFTER (Correct):**
+- `origin.x`: 0.123511 (was 0.23)
+- `origin.y`: 0.431957 (was 0.22)
+- `cell.width`: 0.052933 (was 0.075)
+- `cell.height`: 0.039104 (was 0.055)
+- `row_spacing`: 0.092079 (was 0.095)
+- `col_spacing`: 0.180856 (was 0.108)
+
+## Technical Details
+
+### Image Dimensions
+- **Current crop size**: 2267 × 2954 pixels
+- **Crop region**: x1=141, y1=195, x2=2408, y2=3149
+
+### Documented Measurements (from run_20251001_185300_good)
+The good run used 2267 × 2813 pixel images with these checkbox coordinates:
+- Row Y positions: 1228, 1500, 1772, 2044, 2316
+- Column X positions: 280, 690, 1100, 1505, 1915
+- Box dimensions: 120 × 110 pixels
+- Row spacing: 272 pixels
+- Column spacing: 410 pixels
+
+### Crop Dimension Adjustment
+The current crop (y1=195, y2=3149) differs from the good run's crop (y1=243, y2=3056):
+- **48 pixels MORE at the top** (195 vs 243)
+- **93 pixels MORE at the bottom** (3149 vs 3056)
+- **Total height difference**: 141 pixels
+
+Because the current crop includes 48 more pixels at the top, all checkbox Y coordinates shift down by 48 pixels:
+- Adjusted Y positions: 1276, 1548, 1820, 2092, 2364
+
+### Normalized Coordinate Calculation
+For a 2954px tall image:
+```
+origin_y = 1276 / 2954 = 0.431957
+row_spacing = 272 / 2954 = 0.092079
+```
+
+Similarly for X coordinates with 2267px width:
+```
+origin_x = 280 / 2267 = 0.123511
+col_spacing = 410 / 2267 = 0.180856
+```
+
+## Verification
+The updated coordinates produce pixel positions within ±1 pixel of the target:
+- Row 1: 1276px (target: 1276px) ✓
+- Row 2: 1548px (target: 1548px) ✓
+- Row 3: 1820px (target: 1820px) ✓
+- Row 4: 2092px (target: 2092px) ✓
+- Row 5: 2364px (target: 2364px) ✓
+
+## Files Modified
+- `templates/crc_survey_l_anchors_v1/grid.json` - Updated checkbox_grid coordinates
+
+## Reference Documentation
+- `/artifacts/run_20251001_185300_good/notes/checkbox_coordinates.md` - Detailed measurements
+- `/artifacts/run_20251001_185300_good/notes/checkbox_setup_summary.md` - Methodology
+- `/artifacts/run_20251002_081927/` - Working run with correct crop dimensions
+
+## Next Steps
+Run a test pipeline to verify the checkbox overlays now align correctly:
+```bash
+python3 run_pipeline.py --pdf <test.pdf> \
+  --template templates/crc_survey_l_anchors_v1/template.json \
+  --threshold 11.5 \
+  --notes "Test with corrected checkbox coordinates"
+```

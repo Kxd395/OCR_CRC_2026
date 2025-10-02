@@ -1,0 +1,53 @@
+{
+  "form_id": "crc_survey_l_anchors_v1",
+  "version": "1.0.0",
+  "description": "CRC survey (L-anchors) with 5x5 checkbox grid (Q1..Q5)",
+  "page": {
+    "dpi": 300,
+    "width": 2550,
+    "height": 3300
+  },
+  "anchors": [
+    {
+      "x": 0.07,
+      "y": 0.085
+    },
+    {
+      "x": 0.93,
+      "y": 0.086
+    },
+    {
+      "x": 0.93,
+      "y": 0.914
+    },
+    {
+      "x": 0.07,
+      "y": 0.915
+    }
+  ],
+  "checkbox_grid": {
+    "rows": 5,
+    "cols": 5,
+    "labels": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5"
+    ],
+    "origin": {
+      "x": 0.123511,
+      "y": 0.431957
+    },
+    "cell": {
+      "width": 0.052933,
+      "height": 0.039104
+    },
+    "row_spacing": 0.092079,
+    "col_spacing": 0.180856,
+    "roi_fraction_of_cell": {
+      "w": 0.28,
+      "h": 0.6
+    }
+  }
+}

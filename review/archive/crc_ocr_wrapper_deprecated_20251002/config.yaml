@@ -1,0 +1,3 @@
+# wrapper/config.yaml (optional future use)
+strict: false
+near_margin: 0.03

@@ -1,0 +1,409 @@
+# Pipeline Automation Guide
+
+*### Step 0: **PDF Ingestion** (`scripts/ingest_pdf.py`)
+- Extracts pages from PDF
+- Creates timestamped run directory: `artifacts/run_YYYYMMDD_HHMMSS/`
+- Converts pages to grayscale images (1650×2550 pixels)
+- **Output:** `images/page_XXXX.png`
+
+### Step 1: **Anchor Detection** (`scripts/step1_find_anchors.py`)
+- **CRITICAL:** Must run BEFORE alignment
+- Detects L-shaped anchor marks on each page
+- Searches within ±80 pixel windows at expected positions
+- **Current Calibration (validated 100%):**
+  - Top anchors: Y=0.0706 (180px center, search box 100-260px)
+  - Bottom anchors: Y=0.9431 (2405px center, search box 2325-2485px)
+- Uses Otsu thresholding + contour detection
+- **Output:** 
+  - `step1_anchor_detection/anchor_detection_log.json`
+  - `step1_anchor_detection/visualizations/` (green boxes = search windows, red boxes = detected anchors)
+- **Validation:** Check for 100% detection rate before proceeding
+
+### Step 2: **Alignment & Cropping** (`scripts/step2_align_and_crop.py`)
+- **CRITICAL:** Must run AFTER anchor detection
+- Computes homography transform from detected anchors
+- Warps pages to template space (2550×3300 pixels)
+- Crops to checkbox region (~2267×2813 pixels)
+- **Output:**
+  - `02_step2_alignment_and_crop/aligned_full/` (full aligned pages)2025  
+**Status:** ✅ Production Ready
+
+## Overview
+
+The `run_pipeline.py` script provides a **fully automated** workflow that runs all OCR processing steps in the correct order, ensuring data integrity and preventing out-of-sequence operations.
+
+## Quick Start
+
+```bash
+# Basic usage
+python3 run_pipeline.py \
+  --pdf data/review/test_survey.pdf \
+  --template templates/crc_survey_l_anchors_v1/template.json \
+  --threshold 11.5
+
+# With custom notes
+python3 run_pipeline.py \
+  --pdf data/review/test_survey.pdf \
+  --template templates/crc_survey_l_anchors_v1/template.json \
+  --threshold 11.5 \
+  --notes "Batch #123 - Production run"
+```
+
+## Pipeline Steps
+
+The automated pipeline executes the following steps **in order**:
+
+### 1. **PDF Ingestion** (`scripts/ingest_pdf.py`)
+- Extracts pages from PDF
+- Creates timestamped run directory: `artifacts/run_YYYYMMDD_HHMMSS/`
+- Converts pages to grayscale images (1650×2550 pixels)
+- **Output:** `01_step1_grayscale_for_anchors/page_XXXX.png`
+
+### 2. **Anchor Detection** (`scripts/step1_find_anchors.py`)
+- Detects L-shaped anchor marks on each page
+- Searches within ±80 pixel windows at expected positions
+- Uses Otsu thresholding + contour detection
+- **Output:** 
+  - `step1_anchor_detection/anchor_detection_log.json`
+  - `step1_anchor_detection/visualizations/` (green boxes = search windows, red boxes = detected anchors)
+
+### 3. **Alignment & Cropping** (`scripts/step2_alignment_and_crop.py`)
+- Computes homography transform from detected anchors
+- Warps pages to template space (2550×3300 pixels)
+- Crops to checkbox region (~2267×2813 pixels)
+- **Output:**
+  - `02_step2_alignment_and_crop/aligned_full/` (full aligned pages)
+  - `02_step2_alignment_and_crop/aligned_cropped/` (cropped checkbox regions)
+
+### 4. **OCR & Checkbox Detection** (`scripts/run_ocr.py`)
+- Detects checkbox fills using area-based thresholding
+- Applies configured threshold (default: 11.5%)
+- Generates confidence scores for each detection
+- **Output:** `03_step3_ocr_results/ocr_results.json`
+
+### 5. **QA Overlays** (`scripts/qa_overlay_from_results.py`)
+- Creates visual validation overlays
+- Orange boxes = candidate regions above threshold
+- Green boxes = final decisions
+- **Output:** `04_overlays/page_XXXX_overlay.png`
+
+### 6. **Excel Export** (`scripts/export_to_excel.py`)
+- Generates comprehensive 4-sheet Excel report
+- **Sheets:**
+  1. **Summary:** Overview of detection rates and quality
+  2. **Detailed Results:** Per-page, per-checkbox results with confidence scores
+  3. **Response Tally:** Aggregated counts per question/option
+  4. **Raw Data:** Full JSON data for further analysis
+- **Output:** `05_reports/survey_results.xlsx`
+
+## Run Directory Structure
+
+```
+artifacts/run_YYYYMMDD_HHMMSS/
+├── 01_step1_grayscale_for_anchors/
+│   ├── page_0001.png
+│   ├── page_0002.png
+│   └── ...
+├── step1_anchor_detection/
+│   ├── anchor_detection_log.json
+│   └── visualizations/
+│       ├── page_0001_anchors.png
+│       └── ...
+├── 02_step2_alignment_and_crop/
+│   ├── aligned_full/
+│   │   ├── page_0001_aligned.png
+│   │   └── ...
+│   └── aligned_cropped/
+│       ├── page_0001_cropped.png
+│       └── ...
+├── 03_step3_ocr_results/
+│   └── ocr_results.json
+├── 04_overlays/
+│   ├── page_0001_overlay.png
+│   └── ...
+└── 05_reports/
+    └── survey_results.xlsx
+```
+
+## Command-Line Options
+
+### Required Arguments
+
+| Argument | Description | Example |
+|----------|-------------|---------|
+| `--pdf` | Path to input PDF file | `data/review/test_survey.pdf` |
+| `--template` | Path to template JSON | `templates/crc_survey_l_anchors_v1/template.json` |
+| `--threshold` | Checkbox fill threshold (%) | `11.5` |
+
+### Optional Arguments
+
+| Argument | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `--notes` | Run notes/description | None | `"Batch #123"` |
+
+## Configuration Files
+
+### Template Configuration (`templates/crc_survey_l_anchors_v1/template.json`)
+
+Key sections:
+- **`anchors_norm`**: Normalized anchor positions (calibrated for optimal detection)
+  - Top anchors: Y=0.0706 (pixel Y=180, search box 100-260)
+  - Bottom anchors: Y=0.9431 (pixel Y=2405, search box 2325-2485)
+- **`checkboxes`**: Checkbox ROI definitions with 1-based IDs (Q1_1 through Q5_5)
+- **`crop_region_norm`**: Region to extract after alignment
+- **`search_window_px`**: Anchor search tolerance (80 pixels = ±40 from expected)
+
+### OCR Configuration (`configs/ocr.yaml`)
+
+```yaml
+checkbox_detection:
+  method: "area_based"
+  threshold_percent: 11.5  # Override with --threshold flag
+  min_confidence: 0.0
+  
+visualization:
+  overlay_opacity: 0.3
+  candidate_color: [255, 165, 0]  # Orange
+  decision_color: [0, 255, 0]      # Green
+```
+
+## Error Handling
+
+The pipeline includes automatic error detection and reporting:
+
+### Anchor Detection Failures
+```
+ERROR: Anchor detection failed on page 0012 (2/4 anchors found)
+- Check visualization: step1_anchor_detection/visualizations/page_0012_anchors.png
+- Possible causes: Poor scan quality, L-marks obscured, incorrect anchor positions
+```
+
+**Solutions:**
+1. Review visualization to see which anchors failed
+2. Check if L-marks are visible in grayscale image
+3. Verify anchor positions in template.json
+4. Adjust search_window_px if needed (currently 80px)
+
+### Alignment Issues
+```
+ERROR: Homography computation failed on page 0015
+- Requires at least 4 detected anchors
+- Found: 3/4 anchors
+```
+
+**Solutions:**
+1. Fix anchor detection first (see above)
+2. Ensure page is not severely rotated/distorted
+3. Check that L-marks are not cut off at edges
+
+### OCR Errors
+```
+WARNING: Low confidence detection on page 0008, Q3_2 (confidence: 0.45)
+```
+
+**Solutions:**
+1. Review overlay: `04_overlays/page_0008_overlay.png`
+2. Check if checkbox has partial fill or artifact
+3. Adjust threshold if many false positives/negatives
+4. Verify alignment quality in step2 output
+
+## Quality Assurance
+
+### Automated Validation
+
+```bash
+# Run validation after pipeline completes
+python scripts/validate_run.py \
+  --template templates/crc_survey_l_anchors_v1/template.json \
+  --fail-on-error
+```
+
+Checks:
+- All pages processed successfully
+- All anchors detected (4 per page)
+- No missing checkbox data
+- Confidence scores within expected ranges
+
+### Manual Review Checklist
+
+1. **Anchor Detection (step1)**
+   - [ ] Check overall detection rate (should be 100%)
+   - [ ] Review visualizations for any misdetections
+   - [ ] Verify search boxes positioned correctly
+
+2. **Alignment (step2)**
+   - [ ] Spot-check aligned_full images (should be perfectly straight)
+   - [ ] Verify cropped images capture all checkboxes
+   - [ ] Check for any warping artifacts
+
+3. **OCR Results (step3)**
+   - [ ] Review ocr_results.json for unexpected patterns
+   - [ ] Check confidence score distributions
+   - [ ] Verify checkbox IDs are 1-based (Q1_1, not Q1_0)
+
+4. **Overlays (step4)**
+   - [ ] Verify orange boxes highlight all filled checkboxes
+   - [ ] Confirm green boxes mark actual selections
+   - [ ] Look for false positives (artifacts, smudges)
+
+5. **Excel Report (step5)**
+   - [ ] Check Summary sheet for overall quality metrics
+   - [ ] Verify Detailed Results show expected responses
+   - [ ] Validate Response Tally counts
+   - [ ] Spot-check Raw Data against images
+
+## Performance Optimization
+
+### Expected Timing (26-page document on Apple Silicon M-series)
+
+| Step | Duration | Notes |
+|------|----------|-------|
+| PDF Ingestion | ~5-8 sec | PDF decoding + image conversion |
+| Anchor Detection | ~15-20 sec | Image processing + contour detection |
+| Alignment & Crop | ~25-30 sec | Homography computation + warping |
+| OCR & Checkbox | ~10-15 sec | Checkbox region analysis |
+| QA Overlays | ~15-20 sec | Image compositing |
+| Excel Export | ~2-3 sec | Data formatting + file write |
+| **Total** | **~75-100 sec** | ~3-4 sec per page |
+
+### Tips for Faster Processing
+
+1. **Use SSD storage** for artifacts directory (faster I/O)
+2. **Increase Python memory** if processing large batches
+3. **Run on dedicated machine** to avoid resource contention
+4. **Consider parallel processing** for multi-document batches (future enhancement)
+
+## Troubleshooting
+
+### Common Issues
+
+**Issue:** Pipeline fails with "No module named 'cv2'"
+```bash
+# Solution: Reinstall dependencies
+make setup
+# Or manually:
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+**Issue:** "Permission denied" when writing to artifacts/
+```bash
+# Solution: Check directory permissions
+chmod -R u+w artifacts/
+```
+
+**Issue:** Anchor detection rate below 100%
+```bash
+# Solution: Check anchor positions
+cat templates/crc_survey_l_anchors_v1/template.json | grep -A 10 anchors_norm
+# Should show: Top Y=0.0706, Bottom Y=0.9431
+# See docs/ANCHOR_POSITIONS_FINAL.md for calibration details
+```
+
+**Issue:** Excessive false positives in checkbox detection
+```bash
+# Solution: Increase threshold
+python3 run_pipeline.py --pdf <file> --template <template> --threshold 15.0
+# Standard range: 11.0-15.0%
+```
+
+**Issue:** Missing actual checkbox fills
+```bash
+# Solution: Decrease threshold
+python3 run_pipeline.py --pdf <file> --template <template> --threshold 9.0
+# Or review overlays to verify issue
+```
+
+## Batch Processing
+
+For processing multiple PDFs:
+
+```bash
+#!/bin/bash
+# batch_process.sh
+
+TEMPLATE="templates/crc_survey_l_anchors_v1/template.json"
+THRESHOLD=11.5
+
+for pdf in data/review/batch_*.pdf; do
+  echo "Processing: $pdf"
+  python3 run_pipeline.py \
+    --pdf "$pdf" \
+    --template "$TEMPLATE" \
+    --threshold "$THRESHOLD" \
+    --notes "Batch processing: $(basename $pdf)"
+  
+  if [ $? -eq 0 ]; then
+    echo "✅ Success: $pdf"
+  else
+    echo "❌ Failed: $pdf"
+  fi
+done
+```
+
+## Integration with External Systems
+
+### Exporting Results
+
+```python
+# Example: Load results for further processing
+import json
+
+with open('artifacts/run_YYYYMMDD_HHMMSS/03_step3_ocr_results/ocr_results.json') as f:
+    results = json.load(f)
+
+for page_num, page_data in results['pages'].items():
+    print(f"Page {page_num}:")
+    for checkbox_id, checkbox_data in page_data['checkboxes'].items():
+        if checkbox_data['is_filled']:
+            print(f"  {checkbox_id}: Filled (confidence: {checkbox_data['confidence']:.2f})")
+```
+
+### Database Integration
+
+```python
+# Example: Insert results into database
+import sqlite3
+import json
+
+conn = sqlite3.connect('survey_results.db')
+cursor = conn.cursor()
+
+with open('artifacts/run_YYYYMMDD_HHMMSS/03_step3_ocr_results/ocr_results.json') as f:
+    results = json.load(f)
+
+for page_num, page_data in results['pages'].items():
+    for checkbox_id, checkbox_data in page_data['checkboxes'].items():
+        cursor.execute('''
+            INSERT INTO responses (run_id, page, checkbox_id, is_filled, confidence)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (results['run_id'], page_num, checkbox_id, 
+              checkbox_data['is_filled'], checkbox_data['confidence']))
+
+conn.commit()
+conn.close()
+```
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | Oct 1, 2025 | Initial pipeline automation |
+| 1.1.0 | Oct 2, 2025 | Fixed folder naming (run_ prefix) |
+| 1.2.0 | Oct 2, 2025 | Calibrated anchor positions (100% detection) |
+
+## Related Documentation
+
+- **Anchor Configuration:** `docs/ANCHOR_POSITIONS_FINAL.md`
+- **Template Design:** `templates/crc_survey_l_anchors_v1/README.md`
+- **Best Practices:** `docs/BEST_PRACTICES.md`
+- **Manual Usage:** `docs/USAGE.md`
+- **Gemma Integration:** `docs/GEMMA_SETUP.md`
+
+## Support
+
+For issues or questions:
+1. Check this documentation
+2. Review conversation logs for calibration history
+3. Run validation script: `python scripts/validate_run.py`
+4. Create test run with visualization: `scripts/add_grid_to_image.py`
