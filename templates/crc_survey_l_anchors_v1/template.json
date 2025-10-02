@@ -1,7 +1,7 @@
 {
   "document_type_id": "crc_survey_l_anchors_v1",
-  "version": "1.4.0",
-  "description": "Expanded ROI template with per-question thresholds (color fusion disabled - scans are grayscale)",
+    "version": "1.5.0",
+  "description": "CRC Survey L template with 5 questions (Q1-Q5) and 130 checkboxes (26 options per question). Uses ML-based detection with edge features for 97.69% accuracy. Optimized for grayscale scans.",
   "page_size": {
     "width_px": 2550,
     "height_px": 3300,

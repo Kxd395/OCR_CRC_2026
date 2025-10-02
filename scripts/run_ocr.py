@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, json, pathlib, numpy as np, cv2, pytesseract, yaml
+import argparse
+import json
+import pathlib
+import numpy as np
+import cv2
+import yaml
+import joblib
 from scripts.common import read_json, write_json_atomic, latest_run_dir, sorted_pages, tpl_size
 
 def roi_crop(img, roi, tpl_w, tpl_h, min_margin):
@@ -14,6 +20,59 @@ def roi_crop(img, roi, tpl_w, tpl_h, min_margin):
 def mean_fill(gray_roi):
     norm = gray_roi.astype(np.float32)/255.0
     return float((1.0 - norm).mean())
+
+def extract_checkbox_features(gray_crop):
+    """
+    Extract 7 features from a checkbox crop for ML classification.
+    
+    Features match those used in training (extract_features.py):
+    1. Fill percentage (baseline - mean darkness)
+    2. Edge density (Canny edges)
+    3. Stroke length (morphological skeleton)
+    4. Corner count (Harris corners)
+    5. Connected components (distinct marks)
+    6. H/V ratio (horizontal vs vertical edges)
+    7. Variance (texture complexity)
+    """
+    h, w = gray_crop.shape
+    
+    features = {}
+    
+    # Feature 1: Fill percentage (current method)
+    norm = gray_crop.astype(np.float32) / 255.0
+    features['fill_pct'] = float((1.0 - norm).mean()) * 100
+    
+    # Feature 2: Edge density (Canny)
+    edges = cv2.Canny(gray_crop, 50, 150)
+    features['edge_density'] = float(edges.sum()) / (w * h * 255) * 100
+    
+    # Feature 3: Stroke length (morphological skeleton)
+    _, binary = cv2.threshold(gray_crop, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    kernel = np.ones((2, 2), np.uint8)
+    skeleton = cv2.morphologyEx(binary, cv2.MORPH_GRADIENT, kernel)
+    features['stroke_length'] = float(skeleton.sum()) / (w * h * 255) * 100
+    
+    # Feature 4: Corner count (Harris)
+    gray_float = np.float32(gray_crop)
+    corners = cv2.cornerHarris(gray_float, 2, 3, 0.04)
+    corner_threshold = corners.max() * 0.01 if corners.max() > 0 else 0
+    features['corner_count'] = int(np.sum(corners > corner_threshold))
+    
+    # Feature 5: Connected components
+    num_labels, _ = cv2.connectedComponents(binary)
+    features['num_components'] = num_labels - 1  # Subtract background
+    
+    # Feature 6: Horizontal/Vertical ratio
+    sobelx = cv2.Sobel(gray_crop, cv2.CV_64F, 1, 0, ksize=3)
+    sobely = cv2.Sobel(gray_crop, cv2.CV_64F, 0, 1, ksize=3)
+    h_energy = float(np.abs(sobelx).sum())
+    v_energy = float(np.abs(sobely).sum())
+    features['hv_ratio'] = h_energy / (v_energy + 1e-6)
+    
+    # Feature 7: Variance (texture)
+    features['variance'] = float(gray_crop.var())
+    
+    return features
 
 def enhance_checkbox_with_color(img_bgr, x, y, w, h, use_color_fusion=True):
     """
@@ -102,6 +161,30 @@ def main():
         use_color_fusion = tpl["detection_settings"]["use_color_fusion"]
     print(f"Color channel fusion: {'ENABLED' if use_color_fusion else 'DISABLED (grayscale only)'}")
 
+    # Load ML model if available
+    model = None
+    scaler = None
+    use_ml = False
+    
+    template_dir = pathlib.Path(args.template).parent
+    model_file = template_dir / "ml_model.pkl"
+    scaler_file = template_dir / "ml_scaler.pkl"
+    
+    if model_file.exists() and scaler_file.exists():
+        try:
+            model = joblib.load(model_file)
+            scaler = joblib.load(scaler_file)
+            use_ml = True
+            print("✅ ML model loaded - using edge detection + 7 features")
+        except Exception as e:
+            print(f"⚠️  Could not load ML model: {e}")
+            print("   Falling back to threshold-only detection")
+    else:
+        print("ℹ️  ML model not found - using threshold-only detection")
+    
+    feature_names = ['fill_pct', 'edge_density', 'stroke_length', 'corner_count', 
+                     'num_components', 'hv_ratio', 'variance']
+
     out_pages = []
     for img_path in sorted_pages(images_dir):
         img = cv2.imread(str(img_path))
@@ -130,12 +213,26 @@ def main():
             # Apply color channel fusion enhancement
             crop = enhance_checkbox_with_color(img, x, y, w, h, use_color_fusion)
             
-            # Get question-specific threshold if available
-            question_prefix = r["id"].split("_")[0]  # e.g., "Q1" from "Q1_1"
-            threshold = per_q_thresholds.get(question_prefix, fill_th)
+            # Use ML model if available, otherwise fall back to threshold
+            if model is not None and scaler is not None:
+                # Extract features and predict
+                features = extract_checkbox_features(crop)
+                feature_vector = np.array([[features[name] for name in feature_names]])
+                feature_scaled = scaler.transform(feature_vector)
+                prediction = model.predict(feature_scaled)[0]
+                probability = model.predict_proba(feature_scaled)[0, 1]
+                
+                checked = bool(prediction == 1)
+                score = float(probability)  # Use probability as score
+            else:
+                # Fallback to threshold-only detection
+                # Get question-specific threshold if available
+                question_prefix = r["id"].split("_")[0]  # e.g., "Q1" from "Q1_1"
+                threshold = per_q_thresholds.get(question_prefix, fill_th)
+                
+                score = mean_fill(crop)
+                checked = bool(score >= threshold)
             
-            score = mean_fill(crop)
-            checked = bool(score >= threshold)
             filled += int(checked)
             boxes.append({"id": r["id"], "score": score, "checked": checked})
         out_pages.append({"page": img_path.name, "text_len": text_len, "checkboxes": boxes, "checkbox_checked_total": filled})
