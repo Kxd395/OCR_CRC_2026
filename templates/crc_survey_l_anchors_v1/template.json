@@ -1,11 +1,22 @@
 {
   "document_type_id": "crc_survey_l_anchors_v1",
-  "version": "1.2.0",
-  "description": "Expanded ROI template for L-anchors survey with optimized detection threshold",
+  "version": "1.4.0",
+  "description": "Expanded ROI template with per-question thresholds (color fusion disabled - scans are grayscale)",
   "page_size": {
     "width_px": 2550,
     "height_px": 3300,
     "dpi": 300
+  },
+  "detection_settings": {
+    "fill_threshold_percent": 11.6,
+    "use_color_fusion": false,
+    "per_question_thresholds": {
+      "Q1": 11.4,
+      "Q2": 11.3,
+      "Q3": 11.3,
+      "Q4": 11.7,
+      "Q5": 11.7
+    }
   },
   "anchors_norm": [
     {

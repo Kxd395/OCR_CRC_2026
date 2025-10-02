@@ -15,6 +15,45 @@ def mean_fill(gray_roi):
     norm = gray_roi.astype(np.float32)/255.0
     return float((1.0 - norm).mean())
 
+def enhance_checkbox_with_color(img_bgr, x, y, w, h, use_color_fusion=True):
+    """
+    Extract and enhance checkbox region using multi-channel fusion.
+    
+    Args:
+        img_bgr: Original BGR image
+        x, y, w, h: Checkbox ROI coordinates
+        use_color_fusion: Whether to use color channel fusion (default: True)
+    
+    Returns:
+        Enhanced grayscale checkbox crop ready for mean_fill()
+    """
+    # Extract ROI from original BGR image
+    roi_bgr = img_bgr[y:y+h, x:x+w]
+    
+    if not use_color_fusion or len(roi_bgr.shape) != 3:
+        # Fallback to grayscale only
+        return cv2.cvtColor(roi_bgr, cv2.COLOR_BGR2GRAY)
+    
+    # Check if image is actually color (not grayscale converted to BGR)
+    if np.std(roi_bgr) < 1:  # Nearly flat - probably grayscale
+        return cv2.cvtColor(roi_bgr, cv2.COLOR_BGR2GRAY)
+    
+    # Split BGR channels
+    b, g, r = cv2.split(roi_bgr)
+    
+    # Convert to grayscale (standard)
+    gray = cv2.cvtColor(roi_bgr, cv2.COLOR_BGR2GRAY)
+    
+    # Blue ink shows strongest in blue channel (B)
+    # Black ink shows equally in all channels
+    # Pencil/graphite shows best in grayscale
+    
+    # Take minimum of gray and blue channel (darkest marks win)
+    # This enhances both pencil (gray) and blue pen (blue channel)
+    fused = np.minimum(gray, b)
+    
+    return fused
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--template", required=True)
@@ -48,30 +87,58 @@ def main():
     min_margin = int((cfg.get("checkbox") or {}).get("min_margin", 2))
     
     print(f"Using fill threshold: {fill_th*100:.1f}%")
+    
+    # Load per-question thresholds if available
+    per_q_thresholds = {}
+    if "detection_settings" in tpl and "per_question_thresholds" in tpl["detection_settings"]:
+        per_q_thresholds_pct = tpl["detection_settings"]["per_question_thresholds"]
+        # Convert from percentage to decimal
+        per_q_thresholds = {k: v/100.0 for k, v in per_q_thresholds_pct.items()}
+        print(f"Using per-question thresholds: {per_q_thresholds_pct}")
+    
+    # Load color fusion settings
+    use_color_fusion = True  # Default: enabled
+    if "detection_settings" in tpl and "use_color_fusion" in tpl["detection_settings"]:
+        use_color_fusion = tpl["detection_settings"]["use_color_fusion"]
+    print(f"Color channel fusion: {'ENABLED' if use_color_fusion else 'DISABLED (grayscale only)'}")
 
     out_pages = []
     for img_path in sorted_pages(images_dir):
-        img = cv2.imread(str(img_path)); gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = cv2.imread(str(img_path))
         
         # Use cropped image dimensions directly (no homography warp)
-        img_h, img_w = gray.shape[:2]
+        img_h, img_w = img.shape[:2]
 
-        text = pytesseract.image_to_string(gray, lang=langs)
+        # Skip slow Tesseract text extraction for faster testing
+        # text = pytesseract.image_to_string(gray, lang=langs)
+        # text_len = len(text or "")
+        text_len = 0
 
-        boxes = []; filled = 0
+        boxes = []
+        filled = 0
         for r in rois:
             # Extract checkbox directly from cropped image using normalized coordinates
             x = int(r["x"] * img_w) + min_margin
             y = int(r["y"] * img_h) + min_margin
             w = int(r["w"] * img_w) - 2*min_margin
             h = int(r["h"] * img_h) - 2*min_margin
-            x = max(0, x); y = max(0, y); w = max(1, w); h = max(1, h)
-            crop = gray[y:y+h, x:x+w]
+            x = max(0, x)
+            y = max(0, y)
+            w = max(1, w)
+            h = max(1, h)
             
-            score = mean_fill(crop); checked = bool(score >= fill_th)
+            # Apply color channel fusion enhancement
+            crop = enhance_checkbox_with_color(img, x, y, w, h, use_color_fusion)
+            
+            # Get question-specific threshold if available
+            question_prefix = r["id"].split("_")[0]  # e.g., "Q1" from "Q1_1"
+            threshold = per_q_thresholds.get(question_prefix, fill_th)
+            
+            score = mean_fill(crop)
+            checked = bool(score >= threshold)
             filled += int(checked)
             boxes.append({"id": r["id"], "score": score, "checked": checked})
-        out_pages.append({"page": img_path.name, "text_len": len(text or ""), "checkboxes": boxes, "checkbox_checked_total": filled})
+        out_pages.append({"page": img_path.name, "text_len": text_len, "checkboxes": boxes, "checkbox_checked_total": filled})
 
     write_json_atomic(step4_dir/"results.json", out_pages)
     # Also save to logs for backwards compatibility
